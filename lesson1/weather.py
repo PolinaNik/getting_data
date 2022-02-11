@@ -3,7 +3,7 @@ import requests
 import json
 from pprint import pprint
 
-city = 'Arzamas'
+city = 'irkutsk'
 
 url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid=e5e4cd692a72b0b66ea0a6b80255d1c3"
 
