@@ -4,7 +4,8 @@ from pprint import pprint
 import re
 import json
 
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36'}
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36'}
 vacancy = input('Please input a desirable vacancy: ')
 page = 1
 num = 1
@@ -60,7 +61,6 @@ while True:
         else:
             print('Something wrong. Please check vacancy')
             break
-
 
 with open('vacancy_dict.json', 'w', encoding='utf-8') as json_file:
     json.dump(vacancy_dict, json_file)
