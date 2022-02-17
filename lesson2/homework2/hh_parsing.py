@@ -1,6 +1,19 @@
+"""Необходимо собрать информацию о вакансиях на вводимую должность (используем input или через аргументы
+получаем должность) с сайтов HH(обязательно) и/или Superjob(по желанию). Приложение должно анализировать несколько
+страниц сайта (также вводим через input или аргументы). Получившийся список должен содержать в себе минимум:
+
+   1) Наименование вакансии.
+   2) Предлагаемую зарплату (разносим в три поля: минимальная и максимальная и валюта. цифры преобразуем к цифрам).
+   3) Ссылку на саму вакансию.
+   4) Сайт, откуда собрана вакансия.
+
+По желанию можно добавить ещё параметры вакансии (например, работодателя и расположение).
+Структура должна быть одинаковая для вакансий с обоих сайтов. Общий результат можно вывести с помощью
+dataFrame через pandas. Сохраните в json либо csv.
+"""
+
 import requests
 from bs4 import BeautifulSoup
-from pprint import pprint
 import re
 import json
 
@@ -13,6 +26,7 @@ num = 1
 vacancy_dict = {}
 
 while True:
+
     url = f'https://hh.ru/search/vacancy?area=1&clusters=true&enable_snippets=true&ored_clusters=true&text={vacancy}&schedule=remote&from=cluster_schedule&hhtmFromLabel=cluster_schedule&page={page}&hhtmFrom=vacancy_search_list'
     response = requests.get(url, headers=headers)
     dom = BeautifulSoup(response.text, 'html.parser')
@@ -31,19 +45,19 @@ while True:
                     pat_max = re.compile(r'(?<=–.)[^a-zA-zа-яА-Я]+')
                     max_salary = int(pat_max.search(salary).group().replace('\u202f', ''))
                     pat_cur = re.compile(r'[a-zA-zа-яА-Я]+')
-                    currency = str(pat_cur.search(salary).group())
+                    currency = pat_cur.search(salary).group()
                     list_salary = [min_salary, max_salary, currency]
                 elif 'от' in salary:
                     pat_min = re.compile(r'[^a-zA-zа-яА-Я\.]+')
                     min_salary = int(pat_min.search(salary).group().replace('\u202f', ''))
                     pat_cur = re.compile(r'(?<=[^a-zA-zа-яА-Я\.]\s)[a-zA-zа-яА-Я]+')
-                    currency = str(pat_cur.search(salary).group())
+                    currency = pat_cur.search(salary).group()
                     list_salary = [min_salary, None, currency]
                 elif 'до' in salary:
                     pat_max = re.compile(r'[^a-zA-zа-яА-Я\.]+')
                     max_salary = int(pat_max.search(salary).group().replace('\u202f', ''))
                     pat_cur = re.compile(r'(?<=[^a-zA-zа-яА-Я\.]\s)[a-zA-zа-яА-Я]+')
-                    currency = str(pat_cur.search(salary).group())
+                    currency = pat_cur.search(salary).group()
                     list_salary = [None, max_salary, currency]
         except:
             list_salary = [None, None, None]
