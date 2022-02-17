@@ -21,6 +21,7 @@ while True:
     for tag in tags_span:
         name_vacancy = str(tag.find('a', {'data-qa': 'vacancy-serp__vacancy-title'}).getText())
         link_vacancy = tag.find('a', {'data-qa': 'vacancy-serp__vacancy-title'}, href=True)['href']
+        list_salary = []
         try:
             salary = tag.find('span', {'data-qa': 'vacancy-serp__vacancy-compensation'}).getText()
             if salary:
@@ -62,5 +63,5 @@ while True:
             print('Something wrong. Please check vacancy')
             break
 
-with open('vacancy_dict.json', 'w', encoding='utf-8') as json_file:
-    json.dump(vacancy_dict, json_file)
+with open('vacancy_dict.json', 'w') as json_file:
+    json.dump(vacancy_dict, json_file, ensure_ascii=False)
