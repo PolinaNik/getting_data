@@ -24,9 +24,8 @@ vacancy = input('Please input a desirable vacancy: ')
 page = 1
 
 client = MongoClient('localhost', 27017)
-db = client['hh_vacancies']    # database
-vacancies = db.vacancies        # collection
-
+db = client['hh_vacancies']  # database
+vacancies = db.vacancies  # collection
 
 while True:
 
@@ -65,9 +64,9 @@ while True:
         except:
             list_salary = [None, None, None]
         vacancy_value = {"vacancy_name": name_vacancy,
-                               "vacancy_link": link_vacancy,
-                               "salary": list_salary,
-                               "web_link": "https://hh.ru"}
+                         "vacancy_link": link_vacancy,
+                         "salary": list_salary,
+                         "web_link": "https://hh.ru"}
         vacancies.insert_one(vacancy_value)
     if tags_span != []:
         page += 1
