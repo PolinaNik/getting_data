@@ -6,11 +6,11 @@ db = client['hh_vacancies']  # database
 vacancies = db.vacancies  # collection
 
 
-# test = vacancies.aggregate([
-#     {"$group": {"_id": "$vacancy_link", "count": {"$sum": 1}}},
-#     {"$match": {"_id": {"$ne": 'null'}, "count": {"$gt": 1}}},
-#     {"$project": {"name": "$_id", "_id": 0}}
-# ])
+test = vacancies.aggregate([
+    {"$group": {"_id": "$vacancy_link", "count": {"$sum": 1}}},
+    {"$match": {"_id": {"$ne": 'null'}, "count": {"$gt": 1}}},
+    {"$project": {"name": "$_id", "_id": 0}}
+])
 
 
 test = vacancies.find({"salary": {"$elemMatch": {"$gt": 400000}}})

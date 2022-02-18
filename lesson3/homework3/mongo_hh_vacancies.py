@@ -27,6 +27,18 @@ client = MongoClient('localhost', 27017)
 db = client['hh_vacancies']  # database
 vacancies = db.vacancies  # collection
 
+
+def insert_if_no_duplicate(link_vacancy, vacancy_value):
+    """
+    Функция для проверки сущетсвует ли ссылка на вакансию в базе.
+    При отсутсвии ссылки - вакансия добавляется в базу.
+    """
+
+    links = vacancies.find({"vacancy_link": link_vacancy})
+    if len(links) == 0:
+        vacancies.insert_one(vacancy_value)
+
+
 while True:
 
     url = f'https://hh.ru/search/vacancy?area=1&clusters=true&enable_snippets=true&ored_clusters=true&text={vacancy}&schedule=remote&from=cluster_schedule&hhtmFromLabel=cluster_schedule&page={page}&hhtmFrom=vacancy_search_list'
@@ -67,7 +79,8 @@ while True:
                          "vacancy_link": link_vacancy,
                          "salary": list_salary,
                          "web_link": "https://hh.ru"}
-        vacancies.insert_one(vacancy_value)
+
+        insert_if_no_duplicate(link_vacancy, vacancy_value)
     if tags_span != []:
         page += 1
     else:
