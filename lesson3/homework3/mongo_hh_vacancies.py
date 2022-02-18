@@ -15,7 +15,7 @@ dataFrame через pandas. Сохраните в json либо csv.
 import requests
 from bs4 import BeautifulSoup
 import re
-import json
+from pprint import pprint
 from pymongo import MongoClient
 
 headers = {
@@ -79,3 +79,17 @@ while True:
             print('Something wrong. Please check vacancy')
             break
 
+find_salary = vacancies.find({"salary": {"$elemMatch": {"$gt": 400000}}})
+
+for doc in list(find_salary):
+    pprint(doc)
+
+"""output
+
+{'_id': ObjectId('620d9613fcd3e289fc560a99'),
+ 'salary': [None, 450000, 'руб'],
+ 'vacancy_link': 'https://khabarovsk.hh.ru/vacancy/51004272?from=vacancy_search_list&hhtmFrom=vacancy_search_list&query=python',
+ 'vacancy_name': 'Python разработчик (AWS)',
+ 'web_link': 'https://hh.ru'}
+
+"""

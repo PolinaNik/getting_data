@@ -1,16 +1,9 @@
 from pymongo import MongoClient
 from pprint import pprint
 
-
 client = MongoClient('localhost', 27017)
-db = client['hh_vacancies']    # database
-vacancies = db.vacancies        # collection
-
-
-item_details = vacancies.find()
-
-for item in item_details:
-    print(item)
+db = client['hh_vacancies']  # database
+vacancies = db.vacancies  # collection
 
 
 # test = vacancies.aggregate([
@@ -20,3 +13,17 @@ for item in item_details:
 # ])
 
 
+test = vacancies.find({"salary": {"$elemMatch": {"$gt": 400000}}})
+
+for doc in list(test):
+    pprint(doc)
+
+"""output
+
+{'_id': ObjectId('620d9613fcd3e289fc560a99'),
+ 'salary': [None, 450000, 'руб'],
+ 'vacancy_link': 'https://khabarovsk.hh.ru/vacancy/51004272?from=vacancy_search_list&hhtmFrom=vacancy_search_list&query=python',
+ 'vacancy_name': 'Python разработчик (AWS)',
+ 'web_link': 'https://hh.ru'}
+ 
+"""
