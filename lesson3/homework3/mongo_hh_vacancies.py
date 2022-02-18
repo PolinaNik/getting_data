@@ -35,7 +35,7 @@ def insert_if_no_duplicate(link_vacancy, vacancy_value):
     """
 
     links = vacancies.find({"vacancy_link": link_vacancy})
-    if len(links) == 0:
+    if len(list(links)) == 0:
         vacancies.insert_one(vacancy_value)
 
 
