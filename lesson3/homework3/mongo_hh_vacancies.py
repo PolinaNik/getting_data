@@ -98,7 +98,7 @@ for doc in list(find_salary):
 
 """output
 
-{'_id': ObjectId('620d9613fcd3e289fc560a99'),
+{'_id': ObjectId('620ef84c29f8adb80b6094f3'),
  'salary': [None, 450000, 'руб'],
  'vacancy_link': 'https://khabarovsk.hh.ru/vacancy/51004272?from=vacancy_search_list&hhtmFrom=vacancy_search_list&query=python',
  'vacancy_name': 'Python разработчик (AWS)',
